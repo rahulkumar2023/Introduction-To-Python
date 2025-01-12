@@ -1,15 +1,3 @@
-"""
-   CISC-121 2022F
-
-   Name:   Rahul Kumar
-   Student Number: 20349877
-   Email:  21rk74@queensu.ca
-   Date: 2023-31-01
-
-   I confirm that this assignment solution is my own work and conforms to
-   Queen's standards of Academic Integrity
-"""
-
 from functions import friends_to_dictionary
 from functions import friendship_degree
 from functions import all_my_friends
