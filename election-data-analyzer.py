@@ -1,5 +1,5 @@
 # Import all functions from funcion3 file.
-from functions3 import *
+from functions2 import *
 
 # Create a list of dictionaries by reading electionData from file and provide a menu to the user for different reports.
 def main():
