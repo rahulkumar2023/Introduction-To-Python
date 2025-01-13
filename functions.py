@@ -1,15 +1,3 @@
-"""
-   CISC-121 2022F
-
-   Name:   Rahul Kumar
-   Student Number: 20349877
-   Email:  21rk74@queensu.ca
-   Date: 2023-31-01
-
-   I confirm that this assignment solution is my own work and conforms to
-   Queen's standards of Academic Integrity
-"""
-
 def all_odd_or_even(*integers):
 
     """
