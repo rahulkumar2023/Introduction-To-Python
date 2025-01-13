@@ -1,16 +1,4 @@
-"""
-   CISC-121 2023F
-
-   Name:   Rahul Kumar
-   Student Number: 20349877
-   Email:  21rk74@queensu.ca
-   Date: 2023-08-03
-
-   I confirm that this assignment solution is my own work and conforms to
-   Queen's standards of Academic Integrity
-"""
-
-from functions import *
+from functions3 import *
 
 def main():
 
