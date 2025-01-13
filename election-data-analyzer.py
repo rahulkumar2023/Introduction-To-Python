@@ -1,4 +1,4 @@
-# Import all functions from funcion3 file.
+# Import all functions from functions2 file.
 from functions2 import *
 
 # Create a list of dictionaries by reading electionData from file and provide a menu to the user for different reports.
