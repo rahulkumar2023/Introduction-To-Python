@@ -1,132 +1,115 @@
 """
-   CISC-121 2022F
+   CISC-121 2023F
 
    Name:   Rahul Kumar
    Student Number: 20349877
    Email:  21rk74@queensu.ca
-   Date: 2023-31-01
+   Date: 2023-08-03
 
    I confirm that this assignment solution is my own work and conforms to
    Queen's standards of Academic Integrity
 """
 
-def all_odd_or_even(*integers):
-
+def char_prime(my_char):
     """
     -------------------------------------------------------
-    This function takes any number of integers and returns whether the integers are either all even, all odd, or neither all even nor all odd.
-    Use: all_odd_or_even(*integers)
+    Converts an uppercase letter to a unique prime number
+    Based on the conversion given in the footnote
     -------------------------------------------------------
     Parameters:
-        *integers - represents any number of arguments that can be entered by the user, so long as they are all integers
+    my_char - a char in ABCDEFGHIJKLMNOPQRSTUVWXYZ (char)
     Returns:
-        returnvalue - boolean value that if true, represents that all integers are either all odd oe all even, but if false, represents that all integers are neither all even nor all odd
+    prime_int = a prime number unique to the letter
     -------------------------------------------------------
     """
 
-    returnvalue = False
+    letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    p_numbers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101]
 
-    # checks if a list is sent, and if so, then retrieves the list
-    if type(*integers) == list:
-        integerslist = integers[0]
+    # This function creates a dictionary and zips the letters and prime numbers together.
+    dictionary = dict(zip(letters, p_numbers))
 
-    if len(integerslist) > 0:
-        odd_integers = []
-        even_integers = []
+    prime_int = dictionary.get(my_char)
+    return (prime_int)
 
-        for number in integerslist:
-
-            if (number % 2 == 0):
-                even_integers.append(number)
-
-            else:
-                odd_integers.append(number)
-
-        if len(integerslist) == len(even_integers) or len(integerslist) == len(odd_integers):
-            returnvalue = True
-
-    return returnvalue
-
-def friends_to_dictionary():
-
+def Primeify(my_string):
     """
     -------------------------------------------------------
-    This function converts the file friendship.txt into a dictionary, and returns said dictionary.
-    Use: friends_to_dictionary()
+    RECURSIVELY gives the product of primes corresponding to the letters
+    in the string
     -------------------------------------------------------
     Parameters:
-        None
+    my_string - any string (str)
     Returns:
-        friendshipdict - converts the file friendship.txt into a dictionary
+    prime_product = the product of all primes for each letter
     -------------------------------------------------------
     """
 
-    friendshipdict = {}
+    n = len(my_string)
+    prime_product = 1
 
-    # reads the file
-    filename = 'friendship.txt'
+    # If the length of the string is 1, the prime number associated with the letter within the word must be used.
+    if n == 1:
+        prime_product = char_prime(my_string)
 
-    with open(filename, 'r') as datafile:
+    # If the length of the string is greater than 1, the function is recursively called so as to continue to multiply all of the prime numbers within the characters of the string.
+    else:
+        prime_product = prime_product * Primeify(my_string[0]) * Primeify(my_string[1: n + 1])
 
-        for line in datafile:
+    return prime_product
 
-            if (line.strip() != ""):
-                record = line.split()
-                key = record[0]
-
-                # if the person doesn't exist in the dictionary create a value list
-                if key not in friendshipdict.keys():
-                    friendshipdict[key] = []
-
-                # add friend to the list
-                friendshipdict[key].append(record[1])
-
-    datafile.close()
-
-    return friendshipdict
-
-def all_my_friends(friendshipdict, friend):
-
+def is_anagram(string1, string2):
     """
     -------------------------------------------------------
-    This function takes a person from the list and returns all the people who are friends with the given name.
-    Use: all_my_friends(friendshipdict, friend)
+    Determines if two strings are anagrams of each other
     -------------------------------------------------------
     Parameters:
-        friendshipdict - Dictionary that stores the information about a person and their friends
-        friend - An individual friend of a particular person
+    string1, string2 - any two strings (str)
     Returns:
-        friendlist - Represents all of the friends of an individual person in a list
-    -------------------------------------------------------
+    is_anagram = whether or not they are anagrams (Boolean)
+    ------------------------------------------------------
     """
 
-    friendlist = friendshipdict[friend]
+    is_anagram = False
 
-    # find all people who are friends with this person
-    for key in friendshipdict.keys():
+    # If the product of primes is equal for both strings, then, they are both anagrams.
+    if Primeify(string1) == Primeify(string2):
+        is_anagram = True
 
-        # if the person is in the other list and not already added to this list, then, add the other person to this list
-        if ((friend in friendshipdict[key]) and (key not in friendlist)):
-            friendlist.append(key)
+    return is_anagram
 
-    return friendlist
-
-def friendship_degree(dictionary):
+def radix_sort_recursive(arr, max_digits):
 
     """
     -------------------------------------------------------
-    This function prints out the friends of each person in the dictionary.
-    Use: friendship_degree(dictionary)
+    Creates a radix sort for the product of primes that have been created from the inputs of the words entered by the user.
     -------------------------------------------------------
     Parameters:
-        dictionary - Represents the dictionary that has the information of a person and that person's friends
+    arr - list of unsorted prime numbers
+    max_digits - number of digits within the list
     Returns:
-        None
-    -------------------------------------------------------
+    sorted_arr = sorted list of prime numbers
+    ------------------------------------------------------
     """
 
-    for key in dictionary.keys():
-        # this will call all of the friends for each individual person
-        flist = all_my_friends(dictionary, key)
+    # Determine the maximum number of digits in the array
+    if (len(arr) == 0 or max_digits <= 0):
+        return arr
 
-        print(key + " has " + str(len(flist)) + " friends: (%s)" % str(flist).strip('[]'))
+    buckets = [[] for _ in range(10)]
+
+    # Distribute the elements of the array into the buckets based on the current digit value
+    for num in arr:
+        digit = (num // 10 ** (max_digits - 1)) % 10
+        buckets[digit].append(num)
+
+    # Recursively sort the elements in each bucket
+    sorted_buckets = [radix_sort_recursive(bucket, max_digits - 1) for bucket in buckets]
+
+    # Concatenate the sorted buckets back into a single array
+    sorted_arr = []
+
+    for bucket in sorted_buckets:
+        sorted_arr += bucket
+
+    return sorted_arr
